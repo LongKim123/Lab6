@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "WishList";
+}
+
+<h2>WishList</h2>
+
+<ul>
+    @foreach (var product in Model.Products)
+    {
+        <li>
+            @product.Title - @product.Description
+            ($@product.Price.ToString("C"))
+        </li>
+    }
+</ul>
+<div class="card-footer">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+
+            @{
+                int position;
+                int pageCurrent = ViewBag.pageCurrent;
+                string txtSearch = ViewBag.txtSearch;
+                float numSize = ViewBag.numSize;
+                if (pageCurrent > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("WishList", "Home",new { page = pageCurrent - 1, pageSize = 2 })" tabindex="-1">Previous</a>
+                    </li>
+                }
+
+                for (position = 1; position <= numSize; position++)
+                {
+
+                    if (position == pageCurrent)
+                    {
+                        <li class="page-item active"><a class="page-link" href="@Url.Action("WishList", "Home", new { page = position, pageSize = 2 })">@position</a></li>
+                    }
+
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" href="@Url.Action("WishList", "Home", new { page =position, pageSize = 2 })">@position</a></li>
+                    }
+
+                }
+                if (pageCurrent > 0 && pageCurrent < numSize)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("WishList", "Home", new { page = pageCurrent - 1, pageSize = 2 })" tabindex="-1">Next</a>
+                    </li>
+                }
+
+            }
+
+        </ul>
+    </nav>
+</div>
+
+
